@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big Shot Cafe – Burnaby's Coffee & Comfort Spot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --espresso: #1a0f0a;
+    --roast: #3d1f10;
+    --caramel: #c47a3a;
+    --cream: #f5ede0;
+    --foam: #fdf8f2;
+    --chalk: #e8ddd0;
+    --muted: #7a6050;
+    --accent: #d4622a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--foam); color: var(--espresso); overflow-x: hidden; }
+
+  /* HERO - full width, text only */
+  .hero {
+    min-height: 85vh;
+    background: var(--espresso);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(196,122,58,0.2) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(196,122,58,0.15);
+    border: 1px solid rgba(196,122,58,0.4);
+    color: var(--caramel);
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 36px;
+    animation: fadeUp 0.8s ease both;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 8vw, 100px);
+    line-height: 1.05;
+    color: var(--cream);
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s 0.15s ease both;
+    position: relative;
+    max-width: 800px;
+  }
+  .hero h1 em { color: var(--caramel); font-style: italic; }
+  .hero-sub {
+    font-size: 18px;
+    color: rgba(245,237,224,0.65);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.8s 0.3s ease both;
+    position: relative;
+  }
+  .stars-inline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s 0.4s ease both;
+    position: relative;
+  }
+  .stars-inline .stars { color: #f5a623; font-size: 18px; }
+  .stars-inline .rating { color: rgba(245,237,224,0.8); font-size: 14px; }
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.8s 0.5s ease both;
+    position: relative;
+  }
+  .btn-primary {
+    background: var(--caramel);
+    color: white;
+    padding: 16px 36px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+  .btn-ghost {
+    border: 1px solid rgba(245,237,224,0.3);
+    color: var(--cream);
+    padding: 16px 36px;
+    border-radius: 6px;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .btn-ghost:hover { border-color: var(--caramel); color: var(--caramel); }
+
+  /* SECTIONS */
+  section { padding: 90px 0; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--caramel);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 4vw, 50px);
+    line-height: 1.15;
+    color: var(--espresso);
+    margin-bottom: 20px;
+  }
+
+  /* FEATURES */
+  .features { background: var(--foam); }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 56px;
+    background: var(--chalk);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .feature-card { background: var(--foam); padding: 44px 36px; transition: background 0.3s; }
+  .feature-card:hover { background: var(--cream); }
+  .feature-icon { font-size: 34px; margin-bottom: 18px; }
+  .feature-card h3 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 10px; }
+  .feature-card p { font-size: 15px; line-height: 1.7; color: var(--muted); }
+
+  /* MENU */
+  .menu-section { background: var(--espresso); }
+  .menu-section .section-title { color: var(--cream); }
+  .menu-section .section-label { color: var(--caramel); }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 56px;
+  }
+
+  .menu-panel {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(196,122,58,0.2);
+    border-radius: 16px;
+    padding: 40px;
+  }
+
+  .menu-panel h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--caramel);
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(196,122,58,0.25);
+    letter-spacing: 1px;
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    gap: 12px;
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item .name { font-size: 15px; font-weight: 600; color: rgba(245,237,224,1); flex: 1; letter-spacing: 0.2px; }
+  .menu-item .price { font-size: 15px; font-weight: 900; color: var(--caramel); white-space: nowrap; font-family: 'Playfair Display', serif; }
+  .menu-item .sizes { font-size: 12px; color: rgba(245,237,224,0.5); }
+
+  .menu-sub-heading {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(196,122,58,0.7);
+    margin: 20px 0 8px;
+  }
+
+  .menu-divider {
+    height: 1px;
+    background: rgba(196,122,58,0.15);
+    margin: 24px 0;
+  }
+
+  .sandwich-builder {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(196,122,58,0.2);
+    border-radius: 16px;
+    padding: 40px;
+    grid-column: span 2;
+  }
+  .sandwich-builder h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--caramel);
+    margin-bottom: 8px;
+  }
+  .sandwich-builder .sub { font-size: 14px; color: rgba(245,237,224,0.5); margin-bottom: 28px; }
+
+  .sandwich-cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .sandwich-col h4 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 12px;
+  }
+  .sandwich-col ul { list-style: none; }
+  .sandwich-col ul li {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(245,237,224,1);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .highlight-item {
+    background: rgba(196,122,58,0.12);
+    border: 1px solid rgba(196,122,58,0.3);
+    border-radius: 8px;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .highlight-item .name { font-size: 15px; font-weight: 700; color: var(--cream); }
+  .highlight-item .price { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--caramel); }
+
+  /* REVIEWS */
+  .reviews-section { background: var(--foam); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  .review-card {
+    background: white;
+    border-radius: 12px;
+    padding: 36px 32px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    border: 1px solid rgba(196,122,58,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .review-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+  .review-stars { color: #f5a623; font-size: 16px; margin-bottom: 16px; }
+  .review-text { font-family: 'Playfair Display', serif; font-size: 17px; font-style: italic; line-height: 1.65; color: var(--espresso); margin-bottom: 20px; }
+  .reviewer { font-size: 13px; color: var(--muted); font-weight: 500; }
+
+  /* INFO */
+  .info-section { background: var(--espresso); }
+  .info-section .section-title { color: var(--cream); }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; margin-top: 56px; }
+  .info-block h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--caramel); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(196,122,58,0.2); }
+  .info-block ul { list-style: none; }
+  .info-block ul li { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; font-size: 14px; color: rgba(245,237,224,0.75); border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .info-block ul li span { color: rgba(245,237,224,0.45); font-size: 13px; }
+  .info-block p { font-size: 15px; color: rgba(245,237,224,0.7); line-height: 1.8; }
+
+  /* MAP */
+  .map-section { background: var(--foam); }
+  .map-address {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    margin-bottom: 40px;
+    font-size: 17px;
+    color: var(--muted);
+  }
+  .map-container { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
+  .map-container iframe { width: 100%; height: 460px; border: none; display: block; }
+
+  /* CTA */
+  .cta-section {
+    background: var(--caramel);
+    text-align: center;
+    padding: 100px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+  }
+  .cta-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(38px, 5vw, 60px); color: white; line-height: 1.1; margin-bottom: 16px; position: relative; }
+  .cta-section p { font-size: 17px; color: rgba(255,255,255,0.8); margin-bottom: 40px; position: relative; }
+  .cta-section .btn-white {
+    background: white;
+    color: var(--caramel);
+    padding: 18px 48px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .cta-section .btn-white:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+  /* FOOTER */
+  footer { background: var(--roast); color: rgba(245,237,224,0.6); text-align: center; padding: 36px; font-size: 14px; }
+  footer a { color: var(--caramel); text-decoration: none; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .sandwich-builder { grid-column: span 1; }
+    .sandwich-cols { grid-template-columns: 1fr 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .info-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .sandwich-cols { grid-template-columns: 1fr 1fr; }
+    .container { padding: 0 20px; }
+    section { padding: 65px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">☕ Burnaby, BC · Est. on Hastings St</div>
+  <h1>Your <em>coffee</em><br>comfort spot.</h1>
+  <p class="hero-sub">Big Shot Cafe is Burnaby's neighbourhood favourite — warm atmosphere, excellent espresso, and hearty bites made for lingering.</p>
+  <div class="stars-inline">
+    <span class="stars">★★★★☆</span>
+    <span class="rating">4.2 stars · 59 Google Reviews</span>
+  </div>
+  <div class="hero-ctas">
+    <a href="tel:+16042982919" class="btn-primary">📞 Call Us</a>
+    <a href="#menu" class="btn-ghost">View Menu</a>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="container">
+    <p class="section-label">Why Big Shot?</p>
+    <h2 class="section-title">Everything you need,<br>exactly how you like it.</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">☕</div>
+        <h3>Exceptional Coffee</h3>
+        <p>From velvety espresso shots to creamy lattes and rich cappuccinos — every cup is crafted with care. Add a syrup or go oat/almond milk your way.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🥪</div>
+        <h3>Build-Your-Own Sandwiches</h3>
+        <p>Pick your bread, meat, cheese, and veggies — all totally your way. A great lunch that's made exactly how you want it.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌿</div>
+        <h3>Cozy Atmosphere</h3>
+        <p>Down-to-earth and relaxed. Whether you're flying solo, catching up with a friend, or just need a quiet corner — Big Shot feels like home.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🥐</div>
+        <h3>Breakfast & Bites</h3>
+        <p>All-day breakfast, schnitzel sandwiches, grilled cheese, sausage rolls, bagels — there's something hearty for every hour.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💳</div>
+        <h3>Easy to Pay</h3>
+        <p>Credit, debit, and NFC mobile payments all accepted. Dine in, take out — whatever works for you. Wheelchair accessible too.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📍</div>
+        <h3>Convenient Location</h3>
+        <p>Right on Hastings St in Burnaby with parking nearby. Open 7 days a week — early mornings to late evenings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="container">
+    <p class="section-label">What We Serve</p>
+    <h2 class="section-title">Our Menu</h2>
+
+    <div class="menu-grid">
+
+      <!-- HOT DRINKS -->
+      <div class="menu-panel">
+        <h3>☕ Hot Drinks</h3>
+        <p class="menu-sub-heading" style="margin-top:0; margin-bottom:14px; color:rgba(196,122,58,0.6); font-size:11px; letter-spacing:2px;">S &nbsp;/&nbsp; M &nbsp;/&nbsp; L</p>
+        <div class="menu-item"><span class="name">Espresso</span><span class="price">$3.35</span></div>
+        <div class="menu-item"><span class="name">Cafe Latté</span><span class="price">$4.65 / $5.35 / $6.00</span></div>
+        <div class="menu-item"><span class="name">Cappuccino</span><span class="price">$4.50 / $5.20 / $5.90</span></div>
+        <div class="menu-item"><span class="name">Mocha</span><span class="price">$4.80 / $5.50 / $6.20</span></div>
+        <div class="menu-item"><span class="name">Americano</span><span class="price">$3.50 / $4.10 / $4.70</span></div>
+        <div class="menu-item"><span class="name">Regular Coffee</span><span class="price">$2.60 / $3.30 / $3.80</span></div>
+        <div class="menu-item"><span class="name">Hot Chocolate</span><span class="price">$3.40 / $4.70 / $5.45</span></div>
+        <div class="menu-item"><span class="name">Regular Tea</span><span class="price">$3.50 (L)</span></div>
+        <div class="menu-divider"></div>
+        <div class="menu-item"><span class="name">Add Syrup</span><span class="price">+ $0.55</span></div>
+        <div class="menu-item"><span class="name">Oat / Almond Milk</span><span class="price">+ $1.00</span></div>
+      </div>
+
+      <!-- COLD DRINKS -->
+      <div class="menu-panel">
+        <h3>🧊 Cold Drinks</h3>
+        <div class="menu-item"><span class="name">Iced Latté</span><span class="price">$5.50</span></div>
+        <div class="menu-item"><span class="name">Iced Americano</span><span class="price">$5.10</span></div>
+        <div class="menu-item"><span class="name">Italian Soda</span><span class="price">$3.20</span></div>
+        <div class="menu-item"><span class="name">Succo di Frutta</span><span class="price">$3.50</span></div>
+        <div class="menu-item"><span class="name">Bitter</span><span class="price">$3.50</span></div>
+        <div class="menu-item"><span class="name">Chocolate Milk</span><span class="price">$3.50</span></div>
+        <div class="menu-item"><span class="name">Bottled Juice</span><span class="price">$2.85</span></div>
+        <div class="menu-item"><span class="name">Bottled Water</span><span class="price">$2.10</span></div>
+        <div class="menu-item"><span class="name">Regular / Diet Pop</span><span class="price">$2.75</span></div>
+      </div>
+
+      <!-- FOOD -->
+      <div class="menu-panel">
+        <h3>🍽️ Food</h3>
+        <div class="menu-item"><span class="name">Sandwich &amp; Soup</span><span class="price">$15.50</span></div>
+        <div class="menu-item"><span class="name">Schnitzel &amp; Soup</span><span class="price">$16.50</span></div>
+        <div class="menu-item"><span class="name">Schnitzel Sandwich</span><span class="price">$10.50</span></div>
+        <div class="menu-item"><span class="name">Schnitzel Only</span><span class="price">$7.50</span></div>
+        <div class="menu-item"><span class="name">Soup</span><span class="price">$8.50</span></div>
+        <div class="menu-item"><span class="name">Grilled Cheese</span><span class="price">$5.50</span></div>
+        <div class="menu-item"><span class="name">Hot Dog</span><span class="price">$4.50</span></div>
+        <div class="menu-item"><span class="name">Sausage Roll</span><span class="price">$4.50</span></div>
+        <div class="menu-item"><span class="name">Bagel &amp; Cream Cheese</span><span class="price">$3.50</span></div>
+        <div class="menu-item"><span class="name">Assorted Muffins</span><span class="price">$3.95</span></div>
+        <div class="menu-divider"></div>
+        <div class="highlight-item">
+          <span class="name">☀️ All Day Breakfast</span>
+          <span class="price">$12.95</span>
+        </div>
+      </div>
+
+      <!-- SANDWICH BUILDER -->
+      <div class="menu-panel">
+        <h3>🥪 Build Your Sandwich</h3>
+        <p class="sub" style="font-size:13px; color:rgba(245,237,224,0.5); margin-bottom:24px;">Your choice · $8.50</p>
+        <div class="sandwich-cols" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+          <div class="sandwich-col">
+            <h4>Breads</h4>
+            <ul>
+              <li>Focaccia</li>
+              <li>Portuguese Bun</li>
+              <li>White Bread</li>
+              <li>Brown Bread</li>
+            </ul>
+          </div>
+          <div class="sandwich-col">
+            <h4>Meats</h4>
+            <ul>
+              <li>Prosciutto</li>
+              <li>Cotto</li>
+              <li>Mortadella</li>
+              <li>Turkey</li>
+              <li>Salami Genoa</li>
+            </ul>
+          </div>
+          <div class="sandwich-col">
+            <h4>Cheese</h4>
+            <ul>
+              <li>Cheddar</li>
+              <li>Mozzarella</li>
+            </ul>
+          </div>
+          <div class="sandwich-col">
+            <h4>Veggies</h4>
+            <ul>
+              <li>Lettuce</li>
+              <li>Tomato</li>
+              <li>Cucumber</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section">
+  <div class="container">
+    <p class="section-label">Happy Customers</p>
+    <h2 class="section-title">What people are saying.</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Good coffee and espresso. Definitely worth the stop on Hastings."</p>
+        <p class="reviewer">— Google Reviewer</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Friendly and helpful staff — always feel welcome walking through the door."</p>
+        <p class="reviewer">— Google Reviewer</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">"Cozy and relaxed atmosphere. Great spot for solo dining or a quiet catch-up."</p>
+        <p class="reviewer">— Google Reviewer</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Love the customizable sandwiches — exactly what I want every time."</p>
+        <p class="reviewer">— Google Reviewer</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">"Convenient location with parking. The washrooms are always clean. Will be back!"</p>
+        <p class="reviewer">— Google Reviewer</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Excellent coffee and a hidden gem in Burnaby — tell your friends."</p>
+        <p class="reviewer">— Google Reviewer</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info-section">
+  <div class="container">
+    <p class="section-label">Plan Your Visit</p>
+    <h2 class="section-title">Hours &amp; Info</h2>
+    <div class="info-grid">
+      <div class="info-block">
+        <h3>⏰ Hours</h3>
+        <ul>
+          <li>Monday <span>8am – 10pm</span></li>
+          <li>Tuesday <span>8am – 10pm</span></li>
+          <li>Wednesday <span>8am – 10pm</span></li>
+          <li>Thursday <span>8am – 10pm</span></li>
+          <li>Friday <span>8am – 10pm</span></li>
+          <li>Saturday <span>8am – 10pm</span></li>
+          <li>Sunday <span>9am – 9:30pm</span></li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <h3>📞 Contact</h3>
+        <p style="margin-bottom:16px;">3980 Hastings St<br>Burnaby, BC V5C 2J1</p>
+        <p><a href="tel:+16042982919" style="color:var(--caramel); font-size:20px; font-family:'Playfair Display',serif;">(604) 298-2919</a></p>
+      </div>
+      <div class="info-block">
+        <h3>ℹ️ Good to Know</h3>
+        <ul>
+          <li>Dine-in &amp; Takeout <span>✓</span></li>
+          <li>Wheelchair Accessible <span>✓</span></li>
+          <li>Outdoor Seating <span>✓</span></li>
+          <li>Parking Available <span>✓</span></li>
+          <li>Cards &amp; NFC Payments <span>✓</span></li>
+          <li>Free Wi-Fi <span>✓</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-section">
+  <div class="container">
+    <p class="section-label">Find Us</p>
+    <h2 class="section-title">3980 Hastings St, Burnaby</h2>
+    <p class="map-address">📍 3980 Hastings St, Burnaby, BC V5C 2J1</p>
+    <div class="map-container">
+      <iframe
+        src="https://maps.google.com/maps?q=3980+Hastings+St,+Burnaby,+BC&output=embed"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Big Shot Cafe location">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Come in for a cup.<br>Stay for the vibe.</h2>
+  <p>Open 7 days a week. We'd love to see you.</p>
+  <a href="tel:+16042982919" class="btn-white">📞 Call Us: (604) 298-2919</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Big Shot Cafe · 3980 Hastings St, Burnaby BC · <a href="tel:+16042982919">(604) 298-2919</a></p>
+</footer>
+
+</body>
+</html>
